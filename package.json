@@ -1,0 +1,21 @@
+{
+  "name": "js-data-model",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/js-data-model.esm.js",
+  "module": "dist/js-data-model.csm.js",
+  "unpkg": "dist/js-data-model.js",
+  "dependencies": {
+    "rollup": "^1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:iife && npm run build:es",
+    "build:cjs": "rollup src/index.js --file dist/js-data-model.csm.js --format cjs",
+    "build:es": "rollup src/index.js --file dist/js-data-model.esm.js --format es",
+    "build:iife": "rollup src/index.js --file dist/js-data-model.js --format iife --output.name JsDataModel",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lllllllqw",
+  "license": "MIT"
+}
