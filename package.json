@@ -5,12 +5,17 @@
   "main": "dist/js-data-model.esm.js",
   "module": "dist/js-data-model.csm.js",
   "unpkg": "dist/js-data-model.js",
-  "dependencies": {
-    "rollup": "^1.4.1"
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "rollup": "^1.4.1",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-resolve": "^4.0.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "build": "npm run build:cjs && npm run build:iife && npm run build:es",
+    "build": "node ./scripts/build.js",
+    "build:all": "npm run build:cjs && npm run build:iife && npm run build:es",
     "build:cjs": "rollup src/index.js --file dist/js-data-model.csm.js --format cjs",
     "build:es": "rollup src/index.js --file dist/js-data-model.esm.js --format es",
     "build:iife": "rollup src/index.js --file dist/js-data-model.js --format iife --output.name JsDataModel",
