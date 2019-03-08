@@ -1,5 +1,5 @@
 const defaultInputOptions = {
-  input: 'src/index.js'
+  input: 'src/index.js',
 }
 
 module.exports.builds = [
@@ -8,16 +8,16 @@ module.exports.builds = [
     inputOptions: defaultInputOptions,
     outputOptions: {
       file: 'dist/js-data-model.csm.js',
-      format: 'cjs'
-    }
+      format: 'cjs',
+    },
   },
   // es6 module
   {
     inputOptions: defaultInputOptions,
     outputOptions: {
       file: 'dist/js-data-model.esm.js',
-      format: 'es'
-    }
+      format: 'es',
+    },
   },
   // 通过 script 引入
   {
@@ -26,8 +26,8 @@ module.exports.builds = [
       file: 'dist/js-data-model.js',
       format: 'iife',
       output: {
-        name: 'JsDataModel'
-      }
-    }
-  }
+        name: 'JsDataModel',
+      },
+    },
+  },
 ]
