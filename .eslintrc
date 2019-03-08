@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "env": { "node": true },
+  "parserOptions": {},
+  "parser": "babel-eslint",
+  "rules": {
+    "no-debugger": "off",
+    "eqeqeq": "error",
+    "no-console": "off",
+    "indent": "off",
+    "comma-dangle": [2, "always-multiline"],
+    "no-new": 0,
+    "prefer-promise-reject-errors": 0,
+    "semi": [2, "never"]
+  }
+}
