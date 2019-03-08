@@ -24,4 +24,12 @@ export function get(obj, selector, defaultValue) {
 
 export const isUndef = val => val === undefined
 export const isNull = val => val === null
-export const noVal = val => isUndef(val) || isNull(val)
+export const isNoVal = val => isUndef(val) || isNull(val)
+
+
+export const getDefaultValue = (defaultValue) => {
+  if(typeof defaultValue === 'function') {
+    return defaultValue()
+  }
+  return defaultValue
+}

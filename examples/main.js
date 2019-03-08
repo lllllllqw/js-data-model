@@ -13,6 +13,24 @@ const model = new JsDataModel.DataModel({
       },
     },
   },
+  testItem: {
+    type: Object,
+    subModel: {
+      aaa: {
+        type: String,
+        default: '223'
+      },
+      bbb: {
+        type: Object,
+        subModel: {
+          ccc: {
+            type: String,
+            default: '23'
+          }
+        }
+      }
+    }
+  },
   stringItem: {
     type: String,
     default: '',
