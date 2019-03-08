@@ -18,18 +18,18 @@ const model = new JsDataModel.DataModel({
     subModel: {
       aaa: {
         type: String,
-        default: '223'
+        default: '223',
       },
       bbb: {
         type: Object,
         subModel: {
           ccc: {
             type: String,
-            default: '23'
-          }
-        }
-      }
-    }
+            default: '23',
+          },
+        },
+      },
+    },
   },
   stringItem: {
     type: String,

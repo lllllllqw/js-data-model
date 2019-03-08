@@ -11,18 +11,22 @@ import * as utils from './utils'
 /** @type {Map<any, (val: any, option: Options, helperData: {}) => any>} */
 const parser = new Map([
   [Array, (val, option, helperData) => {
-    // 没有值
-    if (utils.isNoVal(val)) {
-      return utils.getDefaultValue(option.default)
+    const isArray = Object.prototype.toString.call(val) === '[object Array]'
+
+    // 没有值 | 值类型不是 Array, 返回默认的空数组
+    if (utils.isNoVal(val) || !isArray) {
+      return utils.getDefaultValue(option.default) || []
+    }
+    
+    // 定义 model 且 类型值是 Array, 按 model 返回
+    if(option.subModel && isArray) {
+      return val.map((item) => parse(item, option.subModel, helperData))
     }
 
-    // 没有定义模型 | 值类型不是 Array
-    if (!option.subModel || Object.prototype.toString.call(val) !== '[object Array]') {
+    if(isArray) {
+    // 返回浅拷贝的数组
       return [...val]
     }
-
-    // 值类型为 Array, 按 model 返回
-    return val.map((item) => parse(item, option.subModel, helperData))
   }],
   [Object, (val, option, helperData) => {
     // 如果定义了 model, 按 model 返回
