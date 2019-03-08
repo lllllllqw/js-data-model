@@ -1,10 +1,10 @@
 import * as utils from './utils'
 /**
  * @typedef Options
- * @prop {any} type
+ * @prop {Array | Object | Number | String | undefined | null} type
  * @prop {{[key: string]: Options}} subModel
  * @prop {any} default
- * @prop {Function} parse
+ * @prop {Function} parser
  * @prop {string} fromKey
  */
 
