@@ -121,7 +121,7 @@ const parse = (data, model, helperData = {}) => {
   }
 
   return result
-}
+} 
 
 export class DataModel {
   /**

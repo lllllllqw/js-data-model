@@ -10,11 +10,15 @@
 ## 咋子用
 - `script`标签引入
 ```js
-new JsDataModel.DataModel(/** modelOptions */)
+const model = new JsDataModel.DataModel(/** modelOptions */)
+
+model.parse({}) // modelOptions -> an Object formated with model
 ```
 - `esModule`导入
 ```js
 import {DataModel} from 'js-data-model'
 
-new DataModel(/** modelOptions */) 
+const model = new DataModel(/** modelOptions */) 
+
+model.parse({}) // modelOptions -> an Object formated with model
 ```
