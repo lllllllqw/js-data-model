@@ -82,6 +82,12 @@ const parser = new Map([
     (val, option) =>
       utils.isNoVal(val) ? utils.getDefaultValue(option.default) : +val,
   ],
+  [
+    Boolean,
+    (val) => {
+      return !!val
+    },
+  ],
 ])
 
 /**
