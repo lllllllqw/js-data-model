@@ -1,6 +1,6 @@
 {
   "name": "js-data-model",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "一个让表单转换稍微简单那么一点点的库~",
   "main": "dist/js-data-model.esm.js",
   "module": "dist/js-data-model.csm.js",

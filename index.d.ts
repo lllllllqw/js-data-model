@@ -1,5 +1,5 @@
 declare interface Options {
-  type: ArrayConstructor | Object | Number | String | undefined | null
+  type?: ArrayConstructor | Object | Number | String | undefined | null
   subModel?: {[key: string]: Options}
   default?: any
   parser?: (val: any, options: {data: any, model: OptionsMap, option: Options, helperData: any} ) => any
