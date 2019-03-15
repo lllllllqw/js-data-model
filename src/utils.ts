@@ -3,9 +3,12 @@
  * @param {object} obj 对象
  * @param {string} selector 选择器
  * @param {any} defaltValue 默认值
- * @returns: {any}
  */
-export function get(obj, selector, defaultValue) {
+export function get(
+  obj: Record<string, any>,
+  selector: string,
+  defaultValue?: any
+) {
   if (selector === '') {
     return obj
   }
@@ -22,13 +25,12 @@ export function get(obj, selector, defaultValue) {
   }
 }
 
-export const isUndef = val => val === undefined
-export const isNull = val => val === null
-export const isNoVal = val => isUndef(val) || isNull(val)
+export const isUndef = (val: any) => val === undefined
+export const isNull = (val: any) => val === null
+export const isNoVal = (val: any) => isUndef(val) || isNull(val)
 
-
-export const getDefaultValue = (defaultValue) => {
-  if(typeof defaultValue === 'function') {
+export const getDefaultValue = <T>(defaultValue: T | (() => T)) => {
+  if (defaultValue instanceof Function) {
     return defaultValue()
   }
   return defaultValue

@@ -1,7 +1,7 @@
 const rollup = require('rollup')
 const babel = require('rollup-plugin-babel')
 const uglify = require('rollup-plugin-uglify-es')
-const eslint = require('rollup-plugin-eslint').eslint
+const typescript = require('rollup-plugin-typescript')
 const { builds } = require('./build.config')
 
 function build({ inputOptions, outputOptions }) {
@@ -10,7 +10,7 @@ function build({ inputOptions, outputOptions }) {
     .rollup({
       ...inputOptions,
       plugins: [
-        eslint(),
+        typescript(),
         babel({
           exclude: 'node_modules/**', // 只编译我们的源代码
         }),

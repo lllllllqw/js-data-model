@@ -1,5 +1,5 @@
 const defaultInputOptions = {
-  input: 'src/index.js',
+  input: 'src/index.ts',
 }
 
 module.exports.builds = [

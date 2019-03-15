@@ -1,19 +1,17 @@
 import * as utils from './utils'
 
-/**
- * @typedef Options
- * @prop {Array | Object | Number | String | undefined | null} type
- * @prop {{[key: string]: Options}} subModel
- * @prop {any} default
- * @prop {(val: any, options: {data: any, model: {[key: string]: Options}, option: Options, helperData: any} ) => any} parser
- * @prop {string} fromKey
- */
+const parserTypes: parserTypes = {
+  Array: Array,
+  Object: Object,
+  String: String,
+  Number: Number,
+  Boolean: Boolean,
+}
 
-/** @type {Map<any, (val: any, option: Options, helperData: {}) => any>} */
-const parser = new Map([
+const parser = new Map<any, parser>([
   [
-    Array,
-    (val, option, helperData) => {
+    parserTypes.Array,
+    (val, option: Options, helperData) => {
       const isArray = Object.prototype.toString.call(val) === '[object Array]'
 
       // 没有值 | 值类型不是 Array, 返回默认的空数组
@@ -23,7 +21,7 @@ const parser = new Map([
 
       // 定义 model 且 类型值是 Array, 按 model 返回
       if (option.subModel && isArray) {
-        return val.map(item => parse(item, option.subModel, helperData))
+        return val.map((item: any) => parse(item, option.subModel, helperData))
       }
 
       if (isArray) {
@@ -33,8 +31,8 @@ const parser = new Map([
     },
   ],
   [
-    Object,
-    (val, option, helperData) => {
+    parserTypes.Object,
+    (val, option: Options, helperData) => {
       // 如果定义了 model, 按 model 返回
       if (option.subModel) {
         return parse(val, option.subModel, helperData)
@@ -59,7 +57,7 @@ const parser = new Map([
   ],
   // Object & Array => JSON.stringify(val) any -> any.toString()
   [
-    String,
+    parserTypes.String,
     (val, option) => {
       if (utils.isNoVal(val)) {
         return utils.getDefaultValue(option.default)
@@ -78,12 +76,12 @@ const parser = new Map([
   ],
   // [undefined, null, false] -> 0, true -> 1, String -> [number, NaN]
   [
-    Number,
+    parserTypes.Number,
     (val, option) =>
       utils.isNoVal(val) ? utils.getDefaultValue(option.default) : +val,
   ],
   [
-    Boolean,
+    parserTypes.Boolean,
     (val) => {
       return !!val
     },
@@ -94,13 +92,9 @@ const parser = new Map([
  * 根据 model 解析出对应结构的 data
  * @author lqw
  * @date 2019-03-07
- * @param {{}} data 基础数据
- * @param {{[key: string]: Options}} model 结构模型
- * @param {{}} helperData 使用自定义 parser 时的自定义数据
- * @returns {{}}
  */
-const parse = (data, model, helperData = {}) => {
-  const result = {}
+const parse = (data: Record<string, any>, model: Options, helperData: any = {}): Record<string, any> => {
+  const result: Record<string, any> = {}
   // 遍历 model, 对每一个 model 进行解析
   for (const [key, option] of Object.entries(model)) {
     // 优先从 fromKey 字段获取原值
@@ -130,22 +124,21 @@ const parse = (data, model, helperData = {}) => {
 } 
 
 export class DataModel {
-  /**
-   * @param {{[key: string]: Options}} options
-   */
-  constructor(options) {
-    this.options = options
+  model: OptionsMap
+
+  constructor(model: OptionsMap) {
+    this.model = model
   }
 
   /**
-   * 描述
+   * 转换 data 为 model 对应的数据格式
    * @author lqw
    * @date 2019-03-07
    * @param {{}} data 基础数据
    * @param {{}} helperData 使用自定义 parser 时的自定义数据
    * @returns {{}}
    */
-  parse(data, helperData) {
-    return parse(data, this.options, helperData)
+  parse(data: Record<string, any>, helperData?: any): Record<string, any> {
+    return parse(data, this.model, helperData)
   }
 }

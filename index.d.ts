@@ -1,26 +1,37 @@
-declare interface Options {
-  type?: ArrayConstructor | Object | Number | String | undefined | null
-  subModel?: {[key: string]: Options}
-  default?: any
-  parser?: (val: any, options: {data: any, model: OptionsMap, option: Options, helperData: any} ) => any
-  fromKey?: string
+declare module 'js-data-model' {
+  export const DataModel: DataModel
 }
 
-declare interface OptionsMap {
-  [key: string]: Options
-}
-
-declare interface ObjectAny {
+interface parserTypes {
+  Array: ArrayConstructor
+  Object: ObjectConstructor
+  String: StringConstructor
+  Number: NumberConstructor
+  Boolean: BooleanConstructor
   [key: string]: any
 }
 
+type customParser = (
+  val: any,
+  options: { data: any; model: OptionsMap; option: Options; helperData: any }
+) => any
 
-declare module 'js-data-model' {
-  export class DataModel {
-    constructor (options: OptionsMap)
+declare type OptionsMap = Record<string, Options | customParser>
 
-    options: Options
-    
-    parse: (data: ObjectAny, helperData: any) => ObjectAny
-  }
+declare interface Options {
+  type?: ArrayConstructor | Object | Number | String | undefined | null
+  subModel?: OptionsMap
+  default?: any
+  parser?: customParser
+  fromKey?: string
 }
+
+declare class DataModel {
+  constructor(model: OptionsMap)
+
+  model: OptionsMap
+
+  parse: (data: Record<string, any>, helperData?: any) => Record<string, any>
+}
+
+declare type parser = (val: any, model: OptionsMap, helperData?: any) => any

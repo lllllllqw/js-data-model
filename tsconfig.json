@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "module": "esnext"
+  },
+  "include": [
+    "src",
+    "./index.d.ts"
+  ]
+}

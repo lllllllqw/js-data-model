@@ -1,4 +1,4 @@
-import { DataModel } from '../../src'
+import { DataModel } from '../../dist/js-data-model.esm.js'
 
 test('转换为 Array', () => {
   const arrayModel = new DataModel({
@@ -10,7 +10,7 @@ test('转换为 Array', () => {
     },
     useDefault: {
       type: Array,
-      default: () => ([]),
+      default: (): any[] => [],
     },
     parseString: {
       type: Array,

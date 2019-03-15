@@ -13,20 +13,26 @@
     "src",
     "dist/*.js",
     "index.d.ts"
-    ],
+  ],
   "typings": "index.d.ts",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
-    "@types/jest": "^24.0.9",
+    "@types/jest": "^24.0.11",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@typescript-eslint/parser": "^1.4.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.15.1",
+    "eslint-plugin-html": "^5.0.3",
     "jest": "^24.1.0",
     "rollup": "^1.4.1",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-eslint": "^5.0.0",
-    "rollup-plugin-uglify-es": "0.0.1"
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify-es": "0.0.1",
+    "ts-jest": "^24.0.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.3.3333"
   },
   "scripts": {
     "serve": "npm run build:iife -- -w",
