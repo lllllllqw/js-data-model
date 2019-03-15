@@ -1,4 +1,4 @@
-import { DataModel } from '../../dist/js-data-model.esm.js'
+import { DataModel } from '../../src'
 
 test('转换为 Array', () => {
   const arrayModel = new DataModel({
