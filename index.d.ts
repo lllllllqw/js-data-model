@@ -1,5 +1,5 @@
 declare module 'js-data-model' {
-  export const DataModel: DataModelBase
+  export const DataModel: DataModel
 }
 
 interface parserTypes {
@@ -26,12 +26,18 @@ declare interface Options {
   fromKey?: string
 }
 
-declare class DataModelBase {
+declare class DataModel {
   constructor(model: OptionsMap)
 
-  model: OptionsMap
+  private model: OptionsMap
 
   parse(data: Record<string, any>, helperData?: any): Record<string, any>
+
+  static addParserTypes(types: Record<string, any>): void
+
+  static addParser(type: any, parser: parser): void
+
+  static use(plugin: any, options: any): void
 }
 
 declare type parser = (val: any, model: OptionsMap, helperData?: any) => any

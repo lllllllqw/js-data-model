@@ -123,8 +123,8 @@ const parse = (data: Record<string, any>, model: Options, helperData: any = {}):
   return result
 } 
 
-export class DataModel implements DataModelBase {
-  model: OptionsMap
+export class DataModel {
+  private model: OptionsMap
 
   constructor(model: OptionsMap) {
     this.model = model
