@@ -1,4 +1,4 @@
-import { DataModel } from '../../src'
+import { DataModel } from '../../src/index'
 
 test('转换为 Boolean', () => {
   const stringModel = new DataModel({

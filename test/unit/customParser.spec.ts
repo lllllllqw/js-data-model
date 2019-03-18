@@ -1,4 +1,4 @@
-import { DataModel } from '../../src'
+import { DataModel } from '../../src/index'
 
 test('自定义 parser', () => {
   const customParserModel = new DataModel({
