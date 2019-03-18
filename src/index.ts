@@ -1,6 +1,6 @@
 import * as utils from './utils'
 
-const parserTypes: parserTypes = {
+export const parserTypes: parserTypes = {
   Array: Array,
   Object: Object,
   String: String,
@@ -8,7 +8,7 @@ const parserTypes: parserTypes = {
   Boolean: Boolean,
 }
 
-const parser = new Map<any, parser>([
+const parserMap = new Map<any, parser>([
   [
     parserTypes.Array,
     (val, option: Options, helperData) => {
@@ -113,7 +113,7 @@ const parse = (data: Record<string, any>, model: Options, helperData: any = {}):
 
     // 不存在 parser, 则采取 type 对应的默认 parser 解析
     if (option.type) {
-      const newVal = parser.get(option.type)(val, option, helperData)
+      const newVal = parserMap.get(option.type)(val, option, helperData)
       if (!utils.isNoVal(newVal)) {
         result[key] = newVal
       }
@@ -123,7 +123,7 @@ const parse = (data: Record<string, any>, model: Options, helperData: any = {}):
   return result
 } 
 
-export class DataModel {
+export class DataModel implements DataModelBase {
   model: OptionsMap
 
   constructor(model: OptionsMap) {
@@ -134,11 +134,30 @@ export class DataModel {
    * 转换 data 为 model 对应的数据格式
    * @author lqw
    * @date 2019-03-07
-   * @param {{}} data 基础数据
-   * @param {{}} helperData 使用自定义 parser 时的自定义数据
-   * @returns {{}}
    */
-  parse(data: Record<string, any>, helperData?: any): Record<string, any> {
+  public parse(data: Record<string, any>, helperData?: any): Record<string, any> {
     return parse(data, this.model, helperData)
+  }
+
+  static addParserTypes(types: Record<string, any>) {
+    for(const [key, val] of Object.entries(types)) {
+      if(key in parserTypes) {
+        return console.warn('已存在相同的 key, 跳过添加')
+      }
+      parserTypes[key] = val
+    }
+  }
+
+  static addParser(type: any, parser: parser) {
+    if(parserMap.has(type)) {
+      return console.warn('已存在相同的 type, 跳过添加')
+    }
+    parserMap.set(type, parser)
+  }
+
+  static use(plugin: any, options: any) {
+    if(typeof plugin.install === 'function') {
+      plugin.install(DataModel, options)
+    }
   }
 }
