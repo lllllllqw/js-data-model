@@ -155,9 +155,12 @@ export class DataModel {
     parserMap.set(type, parser)
   }
 
-  static use(plugin: any, options: any) {
+  static use(plugin: any, options?: any) {
+    if(typeof plugin === 'function') {
+      return plugin(DataModel, options)
+    }
     if(typeof plugin.install === 'function') {
-      plugin.install(DataModel, options)
+      return plugin.install(DataModel, options)
     }
   }
 }
