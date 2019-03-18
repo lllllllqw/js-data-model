@@ -2,13 +2,12 @@ declare module 'js-data-model' {
   export const DataModel: DataModel
 }
 
-interface parserTypes {
+declare interface parserTypes extends Record<string, any> {
   Array: ArrayConstructor
   Object: ObjectConstructor
   String: StringConstructor
   Number: NumberConstructor
   Boolean: BooleanConstructor
-  [key: string]: any
 }
 
 type customParser = (
@@ -32,12 +31,14 @@ declare class DataModel {
   private model: OptionsMap
 
   parse(data: Record<string, any>, helperData?: any): Record<string, any>
+}
 
-  static addParserTypes(types: Record<string, any>): void
+declare interface DataModelConstructor {
+  addParserTypes(types: Record<string, any>): void
 
-  static addParser(type: any, parser: parser): void
+  addParser(type: any, parser: parser): void
 
-  static use(plugin: any, options: any): void
+  use(plugin: any, options?: any): void
 }
 
 declare type parser = (val: any, model: OptionsMap, helperData?: any) => any
