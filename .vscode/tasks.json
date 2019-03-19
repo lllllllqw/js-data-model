@@ -17,6 +17,11 @@
       "type": "npm",
       "script": "serve",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "publish",
+      "problemMatcher": []
     }
   ]
 }

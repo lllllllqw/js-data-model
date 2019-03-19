@@ -20,14 +20,12 @@ const parserMap = new Map<any, parser>([
       }
 
       // 定义 model 且 类型值是 Array, 按 model 返回
-      if (option.subModel && isArray) {
-        return val.map((item: any) => parse(item, option.subModel, helperData))
+      if (option.subModel) {
+        return val.map((item: any) => parse(item, option.subModel as Options, helperData))
       }
 
-      if (isArray) {
-        // 返回浅拷贝的数组
-        return [...val]
-      }
+      // 返回浅拷贝的数组
+      return [...val]
     },
   ],
   [
@@ -113,7 +111,8 @@ const parse = (data: Record<string, any>, model: Options, helperData: any = {}):
 
     // 不存在 parser, 则采取 type 对应的默认 parser 解析
     if (option.type) {
-      const newVal = parserMap.get(option.type)(val, option, helperData)
+      const parser = parserMap.get(option.type)
+      const newVal = parser ? parser(val, option, helperData) : undefined
       if (!utils.isNoVal(newVal)) {
         result[key] = newVal
       }
