@@ -122,7 +122,7 @@ const parse = (data: Record<string, any>, model: Options, helperData: any = {}):
   return result
 } 
 
-export class DataModel {
+export const DataModel: DataModelConstructor = class implements DataModelInterface {
   private model: OptionsMap
 
   constructor(model: OptionsMap) {
@@ -138,23 +138,23 @@ export class DataModel {
     return parse(data, this.model, helperData)
   }
 
-  static addParserTypes(types: Record<string, any>) {
+  public static addParserTypes(types: Record<string, any>) {
     for(const [key, val] of Object.entries(types)) {
       if(key in parserTypes) {
         return console.warn('已存在相同的 key, 跳过添加')
       }
-      parserTypes[key] = val
+      parserTypes[key as keyof parserTypes] = val
     }
   }
 
-  static addParser(type: any, parser: parser) {
+  public static addParser(type: any, parser: parser) {
     if(parserMap.has(type)) {
       return console.warn('已存在相同的 type, 跳过添加')
     }
     parserMap.set(type, parser)
   }
 
-  static use(plugin: any, options?: any) {
+  public static use(plugin: DataModelPlugin, options?: any) {
     if(typeof plugin === 'function') {
       return plugin(DataModel, options)
     }

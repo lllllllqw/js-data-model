@@ -1,8 +1,8 @@
 declare module 'js-data-model' {
-  export const DataModel: DataModel
+  export const DataModel: DataModelConstructor
 }
 
-declare interface parserTypes extends Record<string, any> {
+declare interface parserTypes {
   Array: ArrayConstructor
   Object: ObjectConstructor
   String: StringConstructor
@@ -25,20 +25,26 @@ declare interface Options {
   fromKey?: string
 }
 
-declare class DataModel {
-  constructor(model: OptionsMap)
+declare type parser = (val: any, model: OptionsMap, helperData?: any) => any
 
-  private model: OptionsMap
-
+declare interface DataModelInterface {
+  /** 转换数据为 model 对应结构 */
   parse(data: Record<string, any>, helperData?: any): Record<string, any>
 }
 
 declare interface DataModelConstructor {
+  new (model: OptionsMap): DataModelInterface
+
+  /** 添加 parserTypes 的枚举*/
   addParserTypes(types: Record<string, any>): void
 
   addParser(type: any, parser: parser): void
 
-  use(plugin: any, options?: any): void
+  use(plugin: DataModelPlugin, options?: any): void
 }
 
-declare type parser = (val: any, model: OptionsMap, helperData?: any) => any
+declare interface DataModelPluginFunction {
+  (DataModel: DataModelConstructor, options?: any): void
+}
+
+declare type DataModelPlugin = DataModelPluginFunction | { install: DataModelPluginFunction }
