@@ -1,5 +1,6 @@
 declare module 'js-data-model' {
   export const DataModel: DataModelConstructor
+  export const parserTypes: parserTypes
 }
 
 declare interface parserTypes {
