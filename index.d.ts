@@ -27,7 +27,7 @@ declare namespace Model {
   type OptionsMap = Record<string, Options | CustomParser>
 
   interface Options {
-    type?: ArrayConstructor | Object | Number | String | undefined | null
+    type?: any
     subModel?: OptionsMap
     default?: any
     parser?: CustomParser
