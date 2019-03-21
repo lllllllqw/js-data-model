@@ -31,5 +31,7 @@ model.parse({}) // modelOptions -> an Object formated with model
 
 更多例子可参考`test/*`
 
+## 
+
 ## TODO
 - 详细文档

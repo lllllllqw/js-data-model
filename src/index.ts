@@ -1,6 +1,6 @@
 import * as utils from './utils'
 
-export const parserTypes: parserTypes = {
+export const parserTypes: ParserTypes = {
   Array: Array,
   Object: Object,
   String: String,
@@ -8,10 +8,10 @@ export const parserTypes: parserTypes = {
   Boolean: Boolean,
 }
 
-const parserMap = new Map<any, parser>([
+const parserMap = new Map<any, Model.Parser>([
   [
     parserTypes.Array,
-    (val, option: Options, helperData) => {
+    (val, option: Model.Options, helperData) => {
       const isArray = Object.prototype.toString.call(val) === '[object Array]'
 
       // 没有值 | 值类型不是 Array, 返回默认的空数组
@@ -21,7 +21,7 @@ const parserMap = new Map<any, parser>([
 
       // 定义 model 且 类型值是 Array, 按 model 返回
       if (option.subModel) {
-        return val.map((item: any) => parse(item, option.subModel as Options, helperData))
+        return val.map((item: any) => parse(item, option.subModel as Model.Options, helperData))
       }
 
       // 返回浅拷贝的数组
@@ -30,7 +30,7 @@ const parserMap = new Map<any, parser>([
   ],
   [
     parserTypes.Object,
-    (val, option: Options, helperData) => {
+    (val, option: Model.Options, helperData) => {
       // 如果定义了 model, 按 model 返回
       if (option.subModel) {
         return parse(val, option.subModel, helperData)
@@ -91,7 +91,7 @@ const parserMap = new Map<any, parser>([
  * @author lqw
  * @date 2019-03-07
  */
-const parse = (data: Record<string, any>, model: Options, helperData: any = {}): Record<string, any> => {
+const parse = (data: Record<string, any>, model: Model.Options, helperData: any = {}): Record<string, any> => {
   const result: Record<string, any> = {}
   // 遍历 model, 对每一个 model 进行解析
   for (const [key, option] of Object.entries(model)) {
@@ -122,10 +122,10 @@ const parse = (data: Record<string, any>, model: Options, helperData: any = {}):
   return result
 } 
 
-export const DataModel: DataModelConstructor = class implements DataModelInterface {
-  private model: OptionsMap
+export const DataModel: Model.DataModelConstructor = class implements Model.DataModelInterface {
+  private model: Model.OptionsMap
 
-  constructor(model: OptionsMap) {
+  constructor(model: Model.OptionsMap) {
     this.model = model
   }
 
@@ -143,18 +143,18 @@ export const DataModel: DataModelConstructor = class implements DataModelInterfa
       if(key in parserTypes) {
         return console.warn('已存在相同的 key, 跳过添加')
       }
-      parserTypes[key as keyof parserTypes] = val
+      parserTypes[key as keyof ParserTypes] = val
     }
   }
 
-  public static addParser(type: any, parser: parser) {
+  public static addParser(type: any, parser: Model.Parser) {
     if(parserMap.has(type)) {
       return console.warn('已存在相同的 type, 跳过添加')
     }
     parserMap.set(type, parser)
   }
 
-  public static use(plugin: DataModelPlugin, options?: any) {
+  public static use(plugin: Model.DataModelPlugin, options?: any) {
     if(typeof plugin === 'function') {
       return plugin(DataModel, options)
     }
